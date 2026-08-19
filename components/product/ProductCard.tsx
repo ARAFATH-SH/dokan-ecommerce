@@ -24,7 +24,7 @@ export default function ProductCard({ product }: { product: Product }) {
           />
           {discount && (
             <span className="absolute top-2 left-2 bg-brand text-white text-xs font-semibold px-2 py-1 rounded">
-              {discount} percent off
+              -{discount}% off
             </span>
           )}
         </div>

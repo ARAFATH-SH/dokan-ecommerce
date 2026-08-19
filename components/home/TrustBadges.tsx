@@ -25,8 +25,9 @@ const badges = [
 
 export default function TrustBadges() {
   return (
-    <section className="border-y border-black/5 bg-neutral-50">
-      <div className="max-w-content mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+    <section>  
+      {/* className="border-y border-black/5 bg-neutral-50" */}
+      {/* <div className="max-w-content mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
         {badges.map((badge) => {
           const Icon = badge.icon;
           return (
@@ -41,7 +42,7 @@ export default function TrustBadges() {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </section>
   );
 }
