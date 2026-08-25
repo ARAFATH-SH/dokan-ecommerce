@@ -93,6 +93,34 @@ export default function SellerLoginModal({ isOpen, onClose, onSwitchToRegister }
             </button>
           </form>
 
+          <div className="mt-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-px bg-gray-200 flex-1" />
+              <span className="text-[12px] text-[#757575]">Or, login with</span>
+              <div className="h-px bg-gray-200 flex-1" />
+            </div>
+            <div className="flex flex-col gap-3">
+              <button
+                type="button"
+                className="w-full bg-[#3b5998] text-white font-medium py-2.5 text-sm hover:bg-[#324b80] transition-colors flex items-center justify-center gap-3 rounded-sm"
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2.039C6.5 2.039 2 6.539 2 12.039c0 5.083 3.766 9.283 8.656 9.945v-7.05h-2.61v-2.895h2.61v-2.222c0-2.576 1.536-3.992 3.882-3.992 1.127 0 2.308.2 2.308.2v2.532h-1.3c-1.28 0-1.68.795-1.68 1.61v1.872h2.86l-.458 2.895h-2.402v7.05c4.89-.662 8.656-4.862 8.656-9.945 0-5.5-4.5-10-10-10z"/>
+                </svg>
+                Facebook
+              </button>
+              <button
+                type="button"
+                className="w-full bg-[#d34836] text-white font-medium py-2.5 text-sm hover:bg-[#b03c2d] transition-colors flex items-center justify-center gap-3 rounded-sm"
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 10.457v3.315h6.72c-.276 1.76-1.025 3.102-1.97 4.048-.158.158-1.543 1.543-4.75 1.543-3.8 0-6.88-3.08-6.88-6.88s3.08-6.88 6.88-6.88c1.867 0 3.31.722 4.382 1.74l2.34-2.34c-1.74-1.74-4.048-2.82-6.722-2.82-5.717 0-10.4 4.683-10.4 10.4s4.683 10.4 10.4 10.4c3 0 5.422-1 7.2-2.857 1.838-1.838 2.42-4.42 2.42-6.42 0-.42-.04-.84-.1-1.257H12z"/>
+                </svg>
+                Google
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

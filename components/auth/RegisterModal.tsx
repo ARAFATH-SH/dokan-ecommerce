@@ -33,7 +33,7 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
       />
       
       {/* Modal Content */}
-      <div className="relative w-full max-w-[400px] bg-white rounded-md shadow-xl overflow-hidden z-10 animate-in fade-in zoom-in duration-200 h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-[400px] bg-white rounded-md shadow-xl overflow-hidden z-10 animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
