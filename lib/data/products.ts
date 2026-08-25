@@ -875,11 +875,11 @@ const raw: RawProduct[] = [
 
 export const products: Product[] = raw.map((item, index) => {
   const slug = slugify(item.title);
-  const image = `https://loremflickr.com/700/700/${item.keyword}?lock=${item.lock}`;
+  const image = `https://picsum.photos/seed/${item.keyword}-${item.lock}/700/700`;
   const gallery = [
     image,
-    `https://loremflickr.com/700/700/${item.keyword}?lock=${item.lock + 1000}`,
-    `https://loremflickr.com/700/700/${item.keyword}?lock=${item.lock + 2000}`
+    `https://picsum.photos/seed/${item.keyword}-${item.lock + 1000}/700/700`,
+    `https://picsum.photos/seed/${item.keyword}-${item.lock + 2000}/700/700`
   ];
   return {
     id: `p-${index + 1}`,
