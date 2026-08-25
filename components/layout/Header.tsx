@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Search, Heart, ShoppingCart, User } from "lucide-react";
+import { Search, Heart, ShoppingCart, User, Store } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import LoginModal from "@/components/auth/LoginModal";
 import RegisterModal from "@/components/auth/RegisterModal";
+import SellerLoginModal from "@/components/auth/SellerLoginModal";
+import SellerRegisterModal from "@/components/auth/SellerRegisterModal";
 
 export default function Header() {
   const router = useRouter();
@@ -14,6 +16,8 @@ export default function Header() {
   const [query, setQuery] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isSellerLoginModalOpen, setIsSellerLoginModalOpen] = useState(false);
+  const [isSellerRegisterModalOpen, setIsSellerRegisterModalOpen] = useState(false);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -48,6 +52,14 @@ export default function Header() {
           </form>
 
           <nav className="hidden md:flex items-center gap-6 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsSellerLoginModalOpen(true)}
+              className="flex flex-col items-center text-xs text-ink-soft hover:text-brand transition-colors"
+            >
+              <Store size={20} strokeWidth={1.75} />
+              <span className="mt-0.5">Seller</span>
+            </button>
             <button
               type="button"
               onClick={() => setIsLoginModalOpen(true)}
@@ -104,6 +116,22 @@ export default function Header() {
         onSwitchToLogin={() => {
           setIsRegisterModalOpen(false);
           setIsLoginModalOpen(true);
+        }}
+      />
+      <SellerLoginModal 
+        isOpen={isSellerLoginModalOpen} 
+        onClose={() => setIsSellerLoginModalOpen(false)} 
+        onSwitchToRegister={() => {
+          setIsSellerLoginModalOpen(false);
+          setIsSellerRegisterModalOpen(true);
+        }}
+      />
+      <SellerRegisterModal 
+        isOpen={isSellerRegisterModalOpen} 
+        onClose={() => setIsSellerRegisterModalOpen(false)} 
+        onSwitchToLogin={() => {
+          setIsSellerRegisterModalOpen(false);
+          setIsSellerLoginModalOpen(true);
         }}
       />
     </>

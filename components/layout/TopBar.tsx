@@ -8,7 +8,7 @@ export default function TopBar() {
           <Link href="#" className="hover:text-brand transition-colors text-[11px] uppercase tracking-wider font-medium text-brand">
             Save More on App
           </Link>
-          <Link href="#" className="hover:text-brand transition-colors text-[11px] uppercase tracking-wider font-medium">
+          <Link href="/seller" className="hover:text-brand transition-colors text-[11px] uppercase tracking-wider font-medium">
             Become a Seller
           </Link>
           <Link href="#" className="hover:text-brand transition-colors text-[11px] uppercase tracking-wider font-medium">
