@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search, Heart, ShoppingCart, User, Store } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import LoginModal from "@/components/auth/LoginModal";
 import RegisterModal from "@/components/auth/RegisterModal";
 import SellerLoginModal from "@/components/auth/SellerLoginModal";
@@ -13,6 +14,7 @@ import SellerRegisterModal from "@/components/auth/SellerRegisterModal";
 export default function Header() {
   const router = useRouter();
   const { totalItems } = useCart();
+  const { user } = useAuth();
   const [query, setQuery] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -60,14 +62,24 @@ export default function Header() {
               <Store size={20} strokeWidth={1.75} />
               <span className="mt-0.5">Seller</span>
             </button>
-            <button
-              type="button"
-              onClick={() => setIsLoginModalOpen(true)}
-              className="flex flex-col items-center text-xs text-ink-soft hover:text-brand transition-colors"
-            >
-              <User size={20} strokeWidth={1.75} />
-              <span className="mt-0.5">Account</span>
-            </button>
+            {user ? (
+              <Link
+                href="/account"
+                className="flex flex-col items-center text-xs text-ink-soft hover:text-brand transition-colors"
+              >
+                <User size={20} strokeWidth={1.75} />
+                <span className="mt-0.5">My Account</span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsLoginModalOpen(true)}
+                className="flex flex-col items-center text-xs text-ink-soft hover:text-brand transition-colors"
+              >
+                <User size={20} strokeWidth={1.75} />
+                <span className="mt-0.5">Login</span>
+              </button>
+            )}
             <Link
               href="#"
               className="flex flex-col items-center text-xs text-ink-soft hover:text-brand transition-colors"

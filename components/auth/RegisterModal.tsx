@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -11,16 +13,38 @@ interface RegisterModalProps {
 }
 
 export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: RegisterModalProps) {
+  const { signup } = useAuth();
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      setName("");
+      setEmail("");
+      setPassword("");
     }
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (name && email && password) {
+      try {
+        await signup(name, email, password);
+        onClose();
+        router.push("/account");
+      } catch (error) {
+        console.error("Signup failed:", error);
+      }
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -56,15 +80,18 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
             </div>
           </div>
 
-          <form>
+          <form onSubmit={handleSignup}>
             <div className="mb-3">
               <label className="block text-[13px] text-[#424242] mb-1">
                 Phone Number or Email*
               </label>
               <input
                 type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Please enter your Phone Number or Email"
                 className="w-full border border-gray-300 px-3 py-2 text-sm rounded-sm focus:border-brand focus:outline-none transition-colors"
+                required
               />
             </div>
             
@@ -74,8 +101,11 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
               </label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 6 characters with a number and a letter"
                 className="w-full border border-gray-300 px-3 py-2 text-sm rounded-sm focus:border-brand focus:outline-none transition-colors"
+                required
               />
             </div>
 
@@ -85,13 +115,16 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
               </label>
               <input
                 type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your first and last name"
                 className="w-full border border-gray-300 px-3 py-2 text-sm rounded-sm focus:border-brand focus:outline-none transition-colors"
+                required
               />
             </div>
 
             <button
-              type="button"
+              type="submit"
               className="w-full bg-[#f57224] text-white font-medium py-2 rounded-sm text-sm hover:bg-[#d0611e] transition-colors uppercase"
             >
               Sign Up

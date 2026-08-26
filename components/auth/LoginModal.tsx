@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -11,16 +12,34 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ isOpen, onClose, onSwitchToRegister }: LoginModalProps) {
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      setEmail("");
+      setPassword("");
     }
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email && password) {
+      try {
+        await login(email, password);
+        onClose();
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -56,15 +75,18 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister }: Logi
             </div>
           </div>
 
-          <form>
+          <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label className="block text-[13px] text-[#424242] mb-1.5">
                 Phone Number or Email*
               </label>
               <input
                 type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Please enter your Phone Number or Email"
                 className="w-full border border-gray-300 px-3 py-2.5 text-sm rounded-sm focus:border-brand focus:outline-none transition-colors"
+                required
               />
             </div>
             
@@ -74,8 +96,11 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister }: Logi
               </label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Please enter your password"
                 className="w-full border border-gray-300 px-3 py-2.5 text-sm rounded-sm focus:border-brand focus:outline-none transition-colors"
+                required
               />
             </div>
 
@@ -86,7 +111,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister }: Logi
             </div>
 
             <button
-              type="button"
+              type="submit"
               className="w-full bg-[#f57224] text-white font-medium py-2.5 rounded-sm text-sm hover:bg-[#d0611e] transition-colors uppercase"
             >
               Login
