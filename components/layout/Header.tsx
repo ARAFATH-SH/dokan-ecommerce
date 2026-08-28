@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Search, Heart, ShoppingCart, User, Store } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Search, Heart, ShoppingCart, User, Store, Smile, Package, Star, XCircle, LogOut } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import LoginModal from "@/components/auth/LoginModal";
@@ -14,12 +14,24 @@ import SellerRegisterModal from "@/components/auth/SellerRegisterModal";
 export default function Header() {
   const router = useRouter();
   const { totalItems } = useCart();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [query, setQuery] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isSellerLoginModalOpen, setIsSellerLoginModalOpen] = useState(false);
   const [isSellerRegisterModalOpen, setIsSellerRegisterModalOpen] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const accountMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (accountMenuRef.current && !accountMenuRef.current.contains(event.target as Node)) {
+        setIsAccountMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -63,13 +75,74 @@ export default function Header() {
               <span className="mt-0.5">Seller</span>
             </button>
             {user ? (
-              <Link
-                href="/account"
-                className="flex flex-col items-center text-xs text-ink-soft hover:text-brand transition-colors"
-              >
-                <User size={20} strokeWidth={1.75} />
-                <span className="mt-0.5">My Account</span>
-              </Link>
+              <div className="relative" ref={accountMenuRef}>
+                <button
+                  onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+                  className={`flex flex-col items-center text-xs transition-colors ${isAccountMenuOpen ? 'text-brand' : 'text-ink-soft hover:text-brand'}`}
+                >
+                  <User size={20} strokeWidth={1.75} />
+                  <span className="mt-0.5 truncate max-w-[70px]">{user.displayName ? user.displayName.split(" ")[0] : "Account"}</span>
+                </button>
+
+                {isAccountMenuOpen && (
+                  <div className="absolute top-full right-0 mt-3 w-64 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] rounded-sm z-50 border border-gray-100">
+                    <div className="absolute -top-[5px] right-4 w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-gray-100"></div>
+                    <div className="relative bg-white flex flex-col py-2 z-10 rounded-sm">
+                      <Link 
+                        href="/account" 
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-50 hover:text-brand text-gray-600 text-[13px] transition-colors"
+                      >
+                        <Smile size={18} className="text-gray-400 stroke-[1.5]" />
+                        Manage My Account
+                      </Link>
+                      <Link 
+                        href="/account" 
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-50 hover:text-brand text-gray-600 text-[13px] transition-colors"
+                      >
+                        <Package size={18} className="text-gray-400 stroke-[1.5]" />
+                        My Orders
+                      </Link>
+                      <Link 
+                        href="/account" 
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-50 hover:text-brand text-gray-600 text-[13px] transition-colors"
+                      >
+                        <Heart size={18} className="text-gray-400 stroke-[1.5]" />
+                        My Wishlist & Followed Stores
+                      </Link>
+                      <Link 
+                        href="/account" 
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-50 hover:text-brand text-gray-600 text-[13px] transition-colors"
+                      >
+                        <Star size={18} className="text-gray-400 stroke-[1.5]" />
+                        My Reviews
+                      </Link>
+                      <Link 
+                        href="/account" 
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-50 hover:text-brand text-gray-600 text-[13px] transition-colors"
+                      >
+                        <XCircle size={18} className="text-gray-400 stroke-[1.5]" />
+                        My Returns & Cancellations
+                      </Link>
+                      <button 
+                        onClick={async () => {
+                          setIsAccountMenuOpen(false);
+                          await logout();
+                          router.push("/");
+                        }}
+                        className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-50 hover:text-brand text-gray-600 text-[13px] w-full text-left transition-colors"
+                      >
+                        <LogOut size={18} className="text-gray-400 stroke-[1.5]" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <button
                 type="button"

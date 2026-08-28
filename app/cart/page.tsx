@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ShoppingBag } from "lucide-react";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import CartItemRow from "@/components/cart/CartItemRow";
@@ -9,6 +10,7 @@ import { products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/utils";
 
 export default function CartPage() {
+  const router = useRouter();
   const { lines, totalPrice, totalItems, clearCart } = useCart();
 
   const resolvedLines = lines
@@ -77,7 +79,8 @@ export default function CartPage() {
             </div>
             <button
               type="button"
-              className="mt-5 w-full bg-brand text-white font-medium rounded-md py-3 hover:bg-brand-600 transition-colors"
+              onClick={() => router.push("/checkout")}
+              className="mt-5 w-full bg-brand text-white font-medium rounded-md py-3 hover:bg-brand-600 transition-colors uppercase tracking-wider text-sm"
             >
               Proceed to checkout
             </button>
