@@ -874,12 +874,56 @@ const raw: RawProduct[] = [
 ];
 
 export const products: Product[] = raw.map((item, index) => {
+  const categoryImages: Record<string, string[]> = {
+    electronics: [
+      "1496181133206-80ce9b88a853",
+      "1505740420928-5e560c06d30e",
+      "1546868871-7041f2a55e12",
+      "1583394838336-acd977736f90",
+      "1523275335684-37898b6baf30",
+    ],
+    fashion: [
+      "1515886657613-9f3515b0c78f",
+      "1529139574466-a30ac1702f2b",
+      "1434389670869-c8c5c5c96318",
+      "1551028719-00167b16eac5",
+    ],
+    "home-living": [
+      "1583847268964-b185b1745484",
+      "1513694203232-719a280e022f",
+      "1505691938895-1758d7feb511",
+      "1524758631624-e2822e304c36",
+    ],
+    "beauty-care": [
+      "1596462502278-27bfdc403348",
+      "1556228578-0d85b1a4d571",
+      "1617897903246-719242758050",
+    ],
+    "sports-outdoor": [
+      "1515523110800-9415d13b84a8",
+      "1517836357463-d25dfeac3438",
+      "1483721310020-03333e577078",
+    ],
+    "toys-kids": [
+      "1596461404969-9ae70f2830c1",
+      "1587654780291-39c9404d746b",
+    ],
+    groceries: [
+      "1542838132-92c53300491e",
+      "1578916171728-46686eac8d58",
+      "1587049352851-8d4e89134782",
+    ]
+  };
+
+  const images = categoryImages[item.categorySlug] || categoryImages["electronics"];
+  const imageId = images[(item.lock + index) % images.length];
+
   const slug = slugify(item.title);
-  const image = `https://picsum.photos/seed/${item.keyword}-${item.lock}/700/700`;
+  const image = `https://images.unsplash.com/photo-${imageId}?auto=format&fit=crop&w=800&q=80`;
   const gallery = [
     image,
-    `https://picsum.photos/seed/${item.keyword}-${item.lock + 1000}/700/700`,
-    `https://picsum.photos/seed/${item.keyword}-${item.lock + 2000}/700/700`
+    `https://images.unsplash.com/photo-${imageId}?auto=format&fit=crop&w=800&q=80&sat=-100`,
+    `https://images.unsplash.com/photo-${imageId}?auto=format&fit=crop&w=800&q=80&con=2`
   ];
   return {
     id: `p-${index + 1}`,

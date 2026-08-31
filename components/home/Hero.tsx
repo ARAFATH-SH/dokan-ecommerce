@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HERO_SLIDES = [
   {
     id: 1,
-    image: "https://picsum.photos/seed/shopping/1600/900",
+    image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1600&q=80",
     subheading: "Season sale is live",
     heading: "Everything you need, at a price you will like",
     description: "Browse electronics, fashion, home goods and more from sellers across the country.",
@@ -17,7 +17,7 @@ const HERO_SLIDES = [
   },
   {
     id: 2,
-    image: "https://picsum.photos/seed/fashion/1600/900",
+    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=80",
     subheading: "New Arrivals",
     heading: "Step into the new season with style",
     description: "Discover the latest trends in fashion and accessories for men and women.",
@@ -26,7 +26,7 @@ const HERO_SLIDES = [
   },
   {
     id: 3,
-    image: "https://picsum.photos/seed/electronics/1600/900",
+    image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1600&q=80",
     subheading: "Tech Week",
     heading: "Upgrade your gear with amazing discounts",
     description: "Get up to 40% off on top-brand smartphones, laptops, and smart home devices.",
@@ -104,7 +104,7 @@ export default function Hero() {
         <div className="grid grid-rows-2 gap-4">
           <div className="relative rounded-xl overflow-hidden bg-neutral-100 min-h-[120px]">
             <Image
-              src="https://picsum.photos/seed/headphones/800/500"
+              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"
               alt="Featured electronics deals"
               fill
               sizes="(max-width: 1024px) 100vw, 33vw"
@@ -119,7 +119,7 @@ export default function Hero() {
           </div>
           <div className="relative rounded-xl overflow-hidden bg-neutral-100 min-h-[120px]">
             <Image
-              src="https://picsum.photos/seed/clothing/800/500"
+              src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80"
               alt="Featured fashion arrivals"
               fill
               sizes="(max-width: 1024px) 100vw, 33vw"

@@ -1,3 +1,4 @@
+"use client";
 import { Truck, ShieldCheck, RotateCcw, Headset } from "lucide-react";
 
 const badges = [
